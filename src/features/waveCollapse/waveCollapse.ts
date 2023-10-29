@@ -1,4 +1,4 @@
-import { TILE_COUNT_X, TILE_COUNT_Y } from '@/pages/Index';
+import { MAX_ITERATIONS, MAX_OCEAN_BOOST, MAX_WATER_BOOST, OCEAN_CASCADE_BOOST, TILE_COUNT_X, TILE_COUNT_Y, WATER_CASCADE_BOOST } from '@/pages/Index';
 import tiles from './tiles';
 import { Grid, Settlement, Tile, Direction } from './types';
 import createGrid from './createGrid';
@@ -393,11 +393,11 @@ export default async function waveCollapse() {
           collapsingLogic(x, y, grid);
 
           // Clear previous tiles only
-          const tiles = gridContainer.querySelectorAll('div:not(.tooltip-class)'); // Assuming you add a tooltip-class to the tooltip
-          tiles.forEach((tile) => tile.remove());
+        //   const tiles = gridContainer.querySelectorAll('div:not(.tooltip-class)'); // Assuming you add a tooltip-class to the tooltip
+        //   tiles.forEach((tile) => tile.remove());
 
           // Render the current grid state
-          renderGrid(grid);
+          //renderGrid(grid);
 
           // Introduce a delay
           await delay(0);

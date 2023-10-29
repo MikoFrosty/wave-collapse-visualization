@@ -10,12 +10,12 @@ export const TILE_COUNT_Y = 40;
 export const TILE_PIXEL_WIDTH = 20;
 export const TILE_PIXEL_HEIGHT = 20;
 
-const MAX_ITERATIONS = 3;
-const OCEAN_CASCADE_BOOST = 100000;
-const MAX_OCEAN_BOOST = 300000;
-const WATER_CASCADE_BOOST = 100;
-const MAX_WATER_BOOST = 1000;
-const OCEAN_TILE = 7;
+export const MAX_ITERATIONS = 3;
+export const OCEAN_CASCADE_BOOST = 100000;
+export const MAX_OCEAN_BOOST = 300000;
+export const WATER_CASCADE_BOOST = 100;
+export const MAX_WATER_BOOST = 1000;
+export const OCEAN_TILE = 7;
 
 const GridContainer = styled('div')({
   display: 'grid',
