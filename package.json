@@ -1,9 +1,9 @@
 {
-  "name": "vite-mui-ts",
+  "name": "wave collapse visualizer",
   "version": "1.0.0",
-  "description": "TypeScript + React + Redux + MUI + RRD + ESLint + Prettier => Boilerplate",
+  "description": "Visualizing wave collapse functions for building game maps.",
   "license": "MIT",
-  "author": "emrecil <info.emrecil@gmail.com>",
+  "author": "Brandon Mikowski",
   "keywords": [
     "react",
     "boilerplate",
@@ -15,22 +15,12 @@
     "rrd",
     "prettier"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/emre-cil/vite-mui-ts.git"
-  },
-  "bugs": {
-    "url": "https://github.com/emre-cil/vite-mui-ts/issues"
-  },
-  "homepage": "https://github.com/emre-cil/vite-mui-ts#readme",
   "scripts": {
     "dev": "vite --open",
     "start": "vite --open",
     "host": "vite --open --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier \"src/**/*.{js,jsx,ts,tsx,css,scss}\" --write",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -51,20 +41,13 @@
     "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.1.0",
-    "@typescript-eslint/parser": "^6.1.0",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-react": "^7.33.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-import": "^2.27.5",
-    "@types/react-dom": "^18.2.7",
-    "@types/react": "^18.2.15",
     "@babel/core": "^7.22.9",
-    "typescript": "^5.1.6",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react-swc": "^3.3.2",
     "prettier": "^3.0.0",
-    "eslint": "^8.45.0",
-    "vitest": "^0.33.0",
-    "vite": "^4.4.6"
+    "typescript": "^5.1.6",
+    "vite": "^4.4.6",
+    "vitest": "^0.33.0"
   }
 }
