@@ -150,14 +150,14 @@ function getValidTilesFromNeighbors(x: number, y: number, grid: Grid) {
 
 function getWeightedRandomTile(
   validTiles: number[],
-  adjacentTile: number | null,
+  adjacentTiles: number[],
   currentTile: number,
   grid: Grid,
   x: number,
   y: number,
 ) {
-  if (!adjacentTile) return validTiles[Math.floor(Math.random() * validTiles.length)];
-  const affinityBoost = tiles[currentTile].affinities?.[adjacentTile] || 0;
+  if (!adjacentTiles.length) return validTiles[Math.floor(Math.random() * validTiles.length)];
+  const affinityBoost = tiles[currentTile].affinities?.[adjacentTiles[0]] || 0; // TODO: adjacent tiles
 
   let cascadeBoost = 0;
   // if (adjacentTile === 7) {
@@ -169,7 +169,7 @@ function getWeightedRandomTile(
   const weightedArray: number[] = [];
   validTiles.forEach((tile) => {
     let weight = tiles[tile].weight;
-    if (tile === adjacentTile) {
+    if (tile === adjacentTiles[0]) { // TODO: adjacent tiles
       weight += affinityBoost + cascadeBoost;
     }
     for (let i = 0; i < weight; i++) {
@@ -331,21 +331,21 @@ function getSpiralCoordinates(width: number, height: number) {
 
 // Check if a tile is adjacent to an ocean tile
 const isAdjacentToOcean = (x: number, y: number, grid: Grid) => {
-    const directions = [
-      [0, 1],
-      [1, 0],
-      [0, -1],
-      [-1, 0],
-    ];
-    for (const [dx, dy] of directions) {
-      const nx = x + dx;
-      const ny = y + dy;
-      if (nx >= 0 && nx < grid[0].length && ny >= 0 && ny < grid.length && grid[ny][nx] === OCEAN_TILE) {
-        return true;
-      }
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ];
+  for (const [dx, dy] of directions) {
+    const nx = x + dx;
+    const ny = y + dy;
+    if (nx >= 0 && nx < grid[0].length && ny >= 0 && ny < grid.length && grid[ny][nx] === OCEAN_TILE) {
+      return true;
     }
-    return false;
-  };
+  }
+  return false;
+};
 
 async function collapse(grid: Grid, setGrid: React.Dispatch<React.SetStateAction<Grid>>) {
   // Function logic that remains the same for all iterations
@@ -354,23 +354,51 @@ async function collapse(grid: Grid, setGrid: React.Dispatch<React.SetStateAction
     const currentTile = grid[y][x];
     // if (currentTile !== 0) return; // WHY IS THIS HERE??
     if (tiles[currentTile].name === 'Water' && currentTile !== OCEAN_TILE && isAdjacentToOcean(x, y, grid)) {
-        console.log('Water tile is adjacent to ocean tile');
+      console.log('Water tile is adjacent to ocean tile');
       grid[y][x] = OCEAN_TILE;
       return;
     }
 
     let validTiles = getValidTilesFromNeighbors(x, y, grid);
-    console.log('validTiles', validTiles)
+    //console.log('validTiles', validTiles)
+
+    const adjacentTiles = [
+      [0, 1],
+      [1, 0],
+      [0, -1],
+      [-1, 0],
+    ]
+      .map(([dx, dy]) => grid[y + dy]?.[x + dx])
+      .filter((tile) => tile !== undefined);
+
+    //adjancentTiles.sort((a, b) => (a === null ? 1 : b === null ? -1 : 0));
 
     // Determine adjacent tile for affinity
-    const adjacentTile = x > 0 ? grid[y][x - 1] : null;
+    //const adjacentTile = x > 0 ? grid[y][x - 1] : null; // ! I think this is wrong
+
+    // check affinities in all directions
+    // if (adjacentTile !== null) {
+    //   const directions = [
+    //     [0, 1],
+    //     [1, 0],
+    //     [0, -1],
+    //     [-1, 0],
+    //   ];
+    //   for (const [dx, dy] of directions) {
+    //     const nx = x + dx;
+    //     const ny = y + dy;
+    //     if (nx >= 0 && nx < grid[0].length && ny >= 0 && ny < grid.length && grid[ny][nx] === adjacentTile) {
+    //       validTiles = validTiles.filter((tile) => tiles[tile].affinities?.[adjacentTile] !== undefined);
+    //     }
+    //   }
+    // }
 
     if (validTiles.length > 0) {
       //   if (validTiles.includes(6) && !isValidSettlementPosition(x, y, grid, 6, allSettlements)) {
       //     validTiles = validTiles.filter((tile) => tile !== 6);
       //   }
 
-      grid[y][x] = getWeightedRandomTile(validTiles, adjacentTile, currentTile, grid, x, y);
+      grid[y][x] = getWeightedRandomTile(validTiles, adjacentTiles, currentTile, grid, x, y);
     } else {
       grid[y][x] = Math.floor(Math.random() * Object.keys(tiles).length);
     }
